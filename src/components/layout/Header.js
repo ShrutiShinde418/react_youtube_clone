@@ -3,7 +3,7 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-
+import Divider from "@material-ui/core/Divider";
 import InputBase from "@material-ui/core/InputBase";
 
 import MenuItem from "@material-ui/core/MenuItem";
@@ -11,10 +11,14 @@ import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-
+import OndemandVideoIcon from '@material-ui/icons/OndemandVideo';
 import VideoCallIcon from "@material-ui/icons/VideoCall";
 import AppsIcon from "@material-ui/icons/Apps";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import youtube_color from "../../assets/youtube_color.png";
+import youtube_kids from "../../assets/youtube_kids.png";
+import youtube_tv from "../../assets/youtube_tv.png";
+import youtube_music from "../../assets/youtube_music.png";
 
 import logo from "../../assets/logo.png";
 
@@ -95,12 +99,20 @@ const Header = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [appAnchorEl, setAppAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const isAppMenuOpen = Boolean(appAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+  const handleAppMenuOpen = (event) => {
+    setAppAnchorEl(event.currentTarget);
+  };
+  const handleAppMenuClose = () => {
+    setAppAnchorEl(null);
   };
 
   const handleMobileMenuClose = () => {
@@ -129,6 +141,40 @@ const Header = (props) => {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
+
+  const renderAppMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: "center", horizontal: "right" }}
+      keepMounted
+      transformOrigin={{ vertical: "center", horizontal: "right" }}
+      open={isAppMenuOpen}
+      onClose={handleAppMenuClose}
+    >
+      <MenuItem>
+      <img src={youtube_tv} height="30px" width="30px"></img>
+        <p style={{marginLeft:"30px"}}>YouTube TV</p>
+      </MenuItem>
+      <Divider />
+      <MenuItem>
+        <img src={youtube_music} height="30px" width="30px"></img>
+        <p style={{marginLeft:"30px"}}>YouTube Music</p>
+      </MenuItem>
+      <MenuItem>
+      <img src={youtube_kids} height="30px" width="30px"></img>
+        <p style={{marginLeft:"30px"}}>YouTube Kids</p>
+      </MenuItem>
+      <Divider />
+      <MenuItem>
+      <img src={youtube_color} height="30px" width="30px"></img>
+        <p style={{marginLeft:"30px"}}>YouTube Academy</p>
+      </MenuItem>
+      <MenuItem>
+      <img src={youtube_color} height="30px" width="30px"></img>
+        <p style={{marginLeft:"30px"}}>YouTube for Artists</p>
+      </MenuItem>
     </Menu>
   );
 
@@ -200,7 +246,8 @@ const Header = (props) => {
               <VideoCallIcon />
             </IconButton>
 
-            <IconButton aria-label="show 17 new notifications" color="inherit">
+            <IconButton aria-label="show 17 new notifications" color="inherit"
+              onClick={handleAppMenuOpen}>
               <AppsIcon />
             </IconButton>
             <IconButton
@@ -236,7 +283,9 @@ const Header = (props) => {
             </IconButton>
           </div>
         </Toolbar>
+        <Divider />
       </AppBar>
+      {renderAppMenu}
       {renderMobileMenu}
       {renderMenu}
     </div>
